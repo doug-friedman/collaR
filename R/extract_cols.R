@@ -11,15 +11,14 @@
 #' @return A data frame containing only the specified columns of the data in the file
 #' @seealso \code{\link[readr]{read_csv}}
 #' @export
-#'
+
 
 extract_cols = function(file="", fields, fields.class, n_max=-1){
-  if(!"readr" %in% rownames(installed.packages())){ stop("The readr package is required.") }
-
-  loadNamespace(readr)
-
+  stopifnot(is.character(file), is.character(fields), is.character(fields.class), is.numeric(n_max))
+  if(!requireNamespace("readr", quietly = TRUE)) { stop("The readr package is required") }
+  
   # Read the first line of the file
-  first.line = read_csv(file, n_max=1)
+  first.line = read_csv(file, n_max = n_max)
 
   # Check that the fields are present and get their indices
   if(length(fields %in% names(first.line)) == length(fields)){
@@ -28,14 +27,17 @@ extract_cols = function(file="", fields, fields.class, n_max=-1){
     print("The specified fields are not present")
   }
 
-  # Create vector to exclude unnecessary columns
-  skip_code = ""
-  for(i in 1:length(names(first.line))){
-    if(i %in% fields.ind){
-      skip_code = paste0(skip_code, fields.class[which(names(first.line)[i] == fields)])
-    } else {
-      skip_code = paste0(skip_code, "_")
+  
+    
+    # Leverages read_csv from the readr if it's available
+    skip_code = ""
+    for(i in 1:length(names(first.line))){
+      if(i %in% fields.ind){
+        skip_code = paste0(skip_code, fields.class[which(names(first.line)[i] == fields)])
+      } else {
+        skip_code = paste0(skip_code, "_")
+      }
     }
-  }
-  return(read_csv(file, col_types = skip_code, n_max=n_max))
+    return(read_csv(file, col_types = skip_code, n_max=n_max))
+  
 }

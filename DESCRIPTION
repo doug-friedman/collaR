@@ -1,10 +1,13 @@
 Package: collaR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: an R package for speedy column extraction from flat files
 Version: 0.1
 Date: 2015-09-15
-Author: Who wrote it
+Author: person("Douglas", "Friedman", , "", c("aut", "cre"))
 Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Description: This is a simple package that provides functions to quickly extract one or more columns from a large
+             flatfile. 
+License: MIT
 LazyData: TRUE
+Imports: readr
+Suggests: testthat
