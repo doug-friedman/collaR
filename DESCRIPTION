@@ -7,7 +7,7 @@ Author: person("Douglas", "Friedman", , "", c("aut", "cre"))
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: This is a simple package that provides functions to quickly extract one or more columns from a large
              flatfile. 
-License: MIT + file LICENSE
+License: MIT
 LazyData: TRUE
 Imports: readr
 Suggests: testthat, covr
