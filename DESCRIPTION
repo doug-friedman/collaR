@@ -10,3 +10,5 @@ Description: This is a simple package that provides functions to quickly extract
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports: readr
+Suggests: testthat, covr
+RoxygenNote: 6.0.1
