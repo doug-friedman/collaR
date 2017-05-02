@@ -19,7 +19,7 @@ extract_cols = function(file="", fields, fields.class, n_max=-1){
   if(!requireNamespace("readr", quietly = TRUE)) { stop("The readr package is required") }
   
   # Read the first line of the file
-  first.line = read_csv(file, n_max = n_max)
+  first.line = read_csv(file, n_max = 1)
 
   # Check that the fields are present and get their indices
   if(length(fields %in% names(first.line)) == length(fields)){
