@@ -6,7 +6,7 @@ context("extract_cols")
 # Removes column printing
 options(readr.num_columns = 0)
 
-tf = file.path("Data", "mtcars.csv")
+tf = "mtcars.csv"
 
 test_that("one column", {
   plain_read = read_csv(tf)[,c("mpg"), drop=FALSE]
