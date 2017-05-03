@@ -4,7 +4,7 @@
 \alias{extract_cols}
 \title{Quickly read only select columns from a flat file}
 \usage{
-extract_cols(file = "", fields, fields.class, n_max = -1)
+extract_cols(file, fields, fields.class, n_max = -1)
 }
 \arguments{
 \item{file}{the name of the csv file which the data are to be read from}

@@ -14,8 +14,23 @@
 #' @export
 
 
-extract_cols = function(file="", fields, fields.class, n_max=-1){
-  stopifnot(is.character(file), is.character(fields), is.character(fields.class), is.numeric(n_max))
+extract_cols = function(file, fields, fields.class, n_max=-1){
+  
+  # File checks
+  if(!is.character(file)){ stop("File information provided is not a character")}
+  if(!file.exists(file)){ stop("File path is invalid")}
+  
+  #Fields check
+  if(!is.character(fields)){ stop("Fields provided are not characters")}
+  
+  #Fields classes check
+  if(!is.character(fields.class)){ stop("Field classes provided are not characters")}
+  if(!any(fields.class %in% c("c","d","i","l"))){ stop("Field classes should be one of the following: c, d, i, l")}
+  
+  #Lengths check
+  if(!length(fields) == length(fields.class)){ stop("Field class vector and field names are not the same")}
+  
+  # readr Library check
   if(!requireNamespace("readr", quietly = TRUE)) { stop("The readr package is required") }
   
   # Read the first line of the file
@@ -30,15 +45,16 @@ extract_cols = function(file="", fields, fields.class, n_max=-1){
 
   
     
-    # Leverages read_csv from the readr if it's available
-    skip_code = ""
-    for(i in 1:length(names(first.line))){
-      if(i %in% fields.ind){
-        skip_code = paste0(skip_code, fields.class[which(names(first.line)[i] == fields)])
-      } else {
-        skip_code = paste0(skip_code, "_")
-      }
+  # Leverages read_csv from the readr if it's available
+  skip_code = ""
+  for(i in 1:length(names(first.line))){
+    if(i %in% fields.ind){
+      skip_code = paste0(skip_code, fields.class[which(names(first.line)[i] == fields)])
+    } else {
+      skip_code = paste0(skip_code, "_")
     }
-    return(read_csv(file, col_types = skip_code, n_max=n_max))
+  }
+  
+  return(read_csv(file, col_types = skip_code, n_max=n_max))
   
 }
