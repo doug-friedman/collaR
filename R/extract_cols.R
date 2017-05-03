@@ -22,10 +22,10 @@ extract_cols = function(file="", fields, fields.class, n_max=-1){
   first.line = read_csv(file, n_max = 1)
 
   # Check that the fields are present and get their indices
-  if(length(fields %in% names(first.line)) == length(fields)){
+  if(all(fields %in% names(first.line))){
     fields.ind = which(names(first.line) %in% fields)
   } else{
-    print("The specified fields are not present")
+    stop("The specified fields are not present")
   }
 
   

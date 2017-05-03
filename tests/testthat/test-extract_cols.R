@@ -19,3 +19,8 @@ test_that("multiple columns", {
   pkg_read = extract_cols(tf, c("mpg", "wt"), c("d", "d"))
   expect_equivalent(plain_read, pkg_read)
 })
+
+test_that("invalid column", {
+  expect_error(extract_cols(tf, c("wzt"), c("d")), "The specified fields are not present")
+})
+
