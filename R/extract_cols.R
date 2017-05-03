@@ -1,14 +1,15 @@
-#' Quickly read only select columns from a flat file
+#' Quickly read only specified columns from a csv using the column names
 #'
 #' @description Given the file, fields, and their classes,
-#'              R will import only the relevant columns.
+#'              R will import only the relevant columns. 
+#'              Knowing the indices or location of these columns is not necessary.
 #' @param file the name of the csv file which the data are to be read from
 #' @param fields the names of the columns in the csv that are to be read in
-#' @param fields.class the classes of the columns using the readr notation
+#' @param fields.class the classes of the columns (in order) using the readr notation
 #'        (c = character, d = double, i = integer, l = logical)
 #' @param n_max number of rows to read from the file
 #'
-#' @return A data frame containing only the specified columns of the data in the file
+#' @return A tibble data.frame containing only the specified columns of the data in the file
 #' @seealso \code{\link[readr]{read_csv}}
 #' @import readr
 #' @export
@@ -43,18 +44,11 @@ extract_cols = function(file, fields, fields.class, n_max=-1){
     stop("The specified fields are not present")
   }
 
-  
-    
-  # Leverages read_csv from the readr if it's available
-  skip_code = ""
-  for(i in 1:length(names(first.line))){
-    if(i %in% fields.ind){
-      skip_code = paste0(skip_code, fields.class[which(names(first.line)[i] == fields)])
-    } else {
-      skip_code = paste0(skip_code, "_")
-    }
-  }
+  # Leverages read_csv from the readr
+  skip_code = rep("_", ncol(first.line))
+  skip_code[fields.ind] = fields.class
+  skip_code = paste0(skip_code, collapse="")
+
   
   return(read_csv(file, col_types = skip_code, n_max=n_max))
-  
 }
